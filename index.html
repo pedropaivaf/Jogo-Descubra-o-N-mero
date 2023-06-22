@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Descubra o Número</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="game-container">
+      <h1>Descubra o Número</h1>
+      <button id="start-button">Iniciar</button>
+      <br><br>
+      <input type="text" id="guess-input" placeholder="Digite seu palpite">
+      <button id="guess-button">Tentar</button>
+      <br><br>
+      <div id="guess-log">
+        <h3>Log de Palpites</h3>
+      </div>
+      <div id="attempts-log">
+        <h3>Tentativas</h3>
+      </div>
+    </div>
+    <script>
+      // Função para gerar um número aleatório entre 1 e 100
+      function generateRandomNumber() {
+        return Math.floor(Math.random() * 100) + 1;
+      }
+  
+      // Referência aos elementos HTML
+      const startButton = document.getElementById('start-button');
+      const guessInput = document.getElementById('guess-input');
+      const guessButton = document.getElementById('guess-button');
+      const guessLog = document.getElementById('guess-log');
+      const attemptsLog = document.getElementById('attempts-log');
+  
+      let randomNumber;
+      let gameStarted = false;
+      let attempts = 0;
+  
+      // Função para atualizar o log de palpites
+      function updateGuessLog(message, isSuccessful) {
+        const logItem = document.createElement('p');
+        logItem.innerText = message;
+        if (isSuccessful) {
+          logItem.classList.add('success');
+        }
+        guessLog.appendChild(logItem);
+      }
+  
+      // Função para atualizar o log de tentativas
+      function updateAttemptsLog(message) {
+        const logItem = document.createElement('p');
+        logItem.innerText = message;
+        attemptsLog.appendChild(logItem);
+      }
+  
+      // Função para limpar os logs
+      function clearLogs() {
+        guessLog.innerHTML = '<h3>Log de Palpites</h3>';
+        attemptsLog.innerHTML = '<h3>Tentativas</h3>';
+      }
+  
+      // Função para iniciar o jogo
+      function startGame() {
+        randomNumber = generateRandomNumber();
+        gameStarted = true;
+        attempts = 0;
+        clearLogs();
+        updateGuessLog('Jogo iniciado. Adivinhe o número!');
+      }
+  
+      // Função para processar o palpite do jogador
+      function processGuess() {
+        if (!gameStarted) {
+          updateGuessLog('O jogo ainda não foi iniciado.');
+          return;
+        }
+  
+        const guess = parseInt(guessInput.value);
+        guessInput.value = '';
+  
+        if (isNaN(guess)) {
+          updateGuessLog('Por favor, digite um número válido.');
+          return;
+        }
+  
+        attempts++;
+        updateAttemptsLog(`Tentativa ${attempts}: ${guess}`);
+  
+        if (guess < randomNumber) {
+          updateGuessLog(`Seu palpite ${guess} é menor que o número sorteado.`);
+        } else if (guess > randomNumber) {
+          updateGuessLog(`Seu palpite ${guess} é maior que o número sorteado.`);
+        } else {
+          updateGuessLog(`Parabéns! Você acertou o número ${guess}.`, true);
+          gameStarted = false;
+        }
+      }
+  
+      // Evento de clique no botão Iniciar
+      startButton.addEventListener('click', startGame);
+  
+      // Evento de clique no botão Tentar
+      guessButton.addEventListener('click', processGuess);
+  
+      // Evento de pressionar a tecla Enter no input de palpite
+      guessInput.addEventListener('keydown', function (event) {
+        if (event.key === 'Enter') {
+          processGuess();
+        }
+      });
+    </script>
+  </body>
+  </html>

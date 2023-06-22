@@ -1,0 +1,49 @@
+body {
+    background-image: url(background.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    font-family: Arial, sans-serif;
+  }
+
+  h1{
+      color: white;
+  }
+
+  h3{
+      color: white;
+  }
+
+  button{
+      background-color: rgb(21, 198, 198);
+      border-radius: 6px;
+  }
+
+  #game-container {
+    text-align: center;
+    margin-top: 100px;
+  }
+
+  #guess-input {
+    margin-bottom: 10px;
+  }
+
+  #guess-log {
+    margin-top: 20px;
+    max-height: 400px;
+    overflow-y: auto;
+    border: 1px solid #ccc;
+    padding: 5px;
+  }
+
+  #attempts-log {
+    margin-top: 20px;
+    max-height: 400px;
+    overflow-y: auto;
+    border: 1px solid #ccc;
+    padding: 5px;
+  }
+  
+  .success {
+    color: aqua;
+    font-weight: bold;
+  }
